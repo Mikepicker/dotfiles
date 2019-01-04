@@ -16,6 +16,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'arcticicestudio/nord-vim'
 Plug 'posva/vim-vue'
 Plug 'tikhomirov/vim-glsl'
+Plug 'mileszs/ack.vim'
 call plug#end()
 
 " Line numbers
@@ -36,12 +37,6 @@ let g:netrw_banner=0
 colorscheme nord
 
 set t_Co=256
-
-" vimgrep
-:set wildignore+=node_modules/**
-:set wildignore+=dist/**
-:set wildignore+=android/**
-command -nargs=1 VG vimgrep <q-args> **/* | copen
 
 " Ctrlp
 let g:ctrlp_custom_ignore = 'node_modules'
