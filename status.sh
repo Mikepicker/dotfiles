@@ -22,25 +22,31 @@ else
 fi
 
 # battery
-b=$(acpi | grep -oP "(\d+)%" | tr -d "\n")
-if test -z "$b"
+b1=$(acpi | grep -oP "(\d+)%" | sed -n '1p' | tr -d "%" | tr -d "\n")
+if test -z "$b1"
 then
-  b="-"
+  b1="-"
+fi
+
+b2=$(acpi | grep -oP "(\d+)%" | sed -n '2p' | tr -d "%" | tr -d "\n")
+if test -z "$b2"
+then
+  b2="-"
 fi
 
 # battery icon
-case ${b%??} in
-  10|[7-9]) bicon="\ue214" ;;
-  [4-6]) bicon="\ue213" ;;
-  [1-3]) bicon="\ue212" ;;
-  *) bicon="\ue211"
-esac
+bwarn=""
+if ((b1 < 15 && b2 < 15))
+then
+  bwarn="!"
+fi
 
 # battery charging / discharging
 bcharg=$(acpi | grep -oP "(Charging)" | tr -d "\n")
+bicon="-"
 if [[ -n "$bcharg" ]]
 then
-  bicon="\ue201"
+  bicon="+"
 fi
 
 # volume
@@ -61,7 +67,7 @@ then
 fi
 
 # Date
-d=$(date +'%a %d %b %R')
+d=$(date +'%a %d %b %R' | tr '[:upper:]' '[:lower:]')
 dicon="\ue226"
 
-echo -e "$wicon $n | $bicon $b | $vicon $v | $dicon $d "
+echo "w $n | b$bicon$bwarn $b1% $b2% | v $v | $d "
