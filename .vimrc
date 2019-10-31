@@ -17,6 +17,10 @@ Plug 'arcticicestudio/nord-vim'
 Plug 'posva/vim-vue'
 Plug 'tikhomirov/vim-glsl'
 Plug 'mileszs/ack.vim'
+Plug 'chrisbra/Colorizer'
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'digitaltoad/vim-pug'
+Plug 'ycm-core/YouCompleteMe'
 call plug#end()
 
 " Line numbers
@@ -38,8 +42,14 @@ colorscheme nord
 
 set t_Co=256
 
+" remap buffergator
+nmap bb \b
+
 " Ctrlp
 let g:ctrlp_custom_ignore = 'node_modules'
+
+" Ack
+cnoreabbrev Ack Ack!
 
 " Indent size 
 " filetype plugin indent on
@@ -54,7 +64,7 @@ set autoindent
 set incsearch
 
 " ES Lint
-" let g:ale_linters = { 'javascript': ['standard'], 'cpp': [] }
+let g:ale_linters = { 'javascript': ['standard', 'eslint'], 'cpp': [] }
 
 " GLSL
 autocmd! BufNewFile,BufRead *.vs,*.fs set ft=glsl
